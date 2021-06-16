@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/{id:(?!assets).*}")
 public class BlogController {
 	
-	@ResponseBody
 	@RequestMapping({"", "/{pathNo1}", "/{pathNo1}/{pathNo2}"})
 	public String index(
 			@PathVariable("id") String id,
@@ -30,7 +29,7 @@ public class BlogController {
 		System.out.println("id:" + id);
 		System.out.println("category:" + categoryNo);
 		System.out.println("post:" + postNo);
-		return "BlogController.index";
+		return "blog/index";
 	}
 	
 	@ResponseBody
