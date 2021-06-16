@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/{id:(?!assets).*}")
@@ -32,10 +31,9 @@ public class BlogController {
 		return "blog/index";
 	}
 	
-	@ResponseBody
 	@RequestMapping("/admin/basic")
 	public String adminBasic(
 			@PathVariable("id") String id) {
-		return "BlogController.adminBasic";
+		return "blog/admin/basic";
 	}
 }
