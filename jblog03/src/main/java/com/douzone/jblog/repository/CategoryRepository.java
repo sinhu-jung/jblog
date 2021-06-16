@@ -1,11 +1,14 @@
 package com.douzone.jblog.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.douzone.jblog.vo.CategoryVo;
 
 @Repository
 public class CategoryRepository {
@@ -22,6 +25,10 @@ public class CategoryRepository {
 		
 		int count = sqlSession.insert("category.insert", map);
 		return count == 1;
+	}
+
+	public List<CategoryVo> findById(String id) {
+		return sqlSession.selectList("category.findById", id);
 	}
 
 }

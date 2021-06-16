@@ -8,4 +8,12 @@
 		values(null, #{c }, #{d }, now(), #{i }) 
 		]]>
 	</insert>
+		
+	<select id="findById" parameterType="String" resultType="categoryvo">
+		<![CDATA[
+		select no, name
+			from categori
+		where blog_id=#{id }
+		]]>
+	</select>
 </mapper>
