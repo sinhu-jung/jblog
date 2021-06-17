@@ -24,15 +24,19 @@ public class PostRepository {
 		sqlSession.delete("post.delete", categoryNo);
 	}
 
-	public PostVo getPost(Long postNo, Long categoryNo) {
-		Map<String, Long> map = new HashMap<>();
+	public PostVo getPost(Long postNo, Long categoryNo, String id) {
+		Map<String, Object> map = new HashMap<>();
 		map.put("postNo", postNo);
 		map.put("categoryNo", categoryNo);
+		map.put("id", id);
 		return sqlSession.selectOne("post.getpost", map);
 	}
 
-	public List<PostVo> getPostList(Long categoryNo) {
-		return sqlSession.selectList("post.getPostList", categoryNo);
+	public List<PostVo> getPostList(Long categoryNo, String id) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("categoryNo", categoryNo);
+		map.put("id", id);
+		return sqlSession.selectList("post.getPostList", map);
 	}
 
 }

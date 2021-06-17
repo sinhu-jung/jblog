@@ -21,22 +21,22 @@
 	<choose>
 		<when test="postNo == 0">
 			<![CDATA[
-			select title, contents 
-				from post 
-			where no=(select min(no) from post where categori_no = #{categoryNo })
+			select p.title, p.contents 
+				from post as p, categori as c
+			where p.categori_no = c.no and p.no=(select min(no) from post where categori_no = ${categoryNo }) and c.blog_id=#{id }
 			]]>
 		</when>
 		<otherwise>
 			<![CDATA[
-			select title, contents from post where categori_no=#{categoryNo } and no=#{postNo }
+			select p.title, p.contents from post as p, categori as c where p.categori_no=c.no and p.categori_no=#{categoryNo } and p.no=#{postNo } and c.blog_id=#{id }
 			]]>
 		</otherwise>
 	</choose>
 	</select>
 	
-	<select id="getPostList" parameterType="long" resultType="postvo">
+	<select id="getPostList" parameterType="map" resultType="postvo">
 		<![CDATA[
-		select no, title, contents, reg_date as regDate, categori_no as categoriNo from post where categori_no=#{categoryNo }
+		select p.no, p.title, p.contents, p.reg_date as regDate, p.categori_no as categoriNo from post as p, categori as c where p.categori_no=c.no and p.categori_no=#{categoryNo } and c.blog_id=#{id }
 		]]>
 	</select>
 </mapper>

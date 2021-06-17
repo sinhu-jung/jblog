@@ -35,8 +35,8 @@ public class CategoryService {
 		categoryRepository.deleteCategory(categoryNo);
 	}
 
-	public Long findminCategory() {
-		return categoryRepository.findminCategory();
+	public Long findminCategory(String id) {
+		return categoryRepository.findminCategory(id);
 	}
 
 }

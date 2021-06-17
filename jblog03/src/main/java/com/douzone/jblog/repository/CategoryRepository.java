@@ -39,8 +39,8 @@ public class CategoryRepository {
 		sqlSession.delete("category.delete", categoryNo);
 	}
 
-	public Long findminCategory() {
-		return sqlSession.selectOne("category.findminId");
+	public Long findminCategory(String id) {
+		return sqlSession.selectOne("category.findminId", id);
 	}
 
 }

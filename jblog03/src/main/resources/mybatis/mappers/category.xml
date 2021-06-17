@@ -15,7 +15,7 @@
 			from categori c
 		left outer join 
    			(select categori_no, count(*) as count from post  group by categori_no) p 
-		ON c.no = p.categori_no;
+		ON c.no = p.categori_no where c.blog_id=#{id };
 		]]>
 	</select>
 	
@@ -35,9 +35,9 @@
 		]]>
 	</delete>
 	
-	<select id="findminId" resultType="long">
+	<select id="findminId" parameterType="string" resultType="long">
 		<![CDATA[
-		select min(no) from categori
+		select min(no) from categori where blog_id=#{id }
 		]]>
 	</select>
 </mapper>

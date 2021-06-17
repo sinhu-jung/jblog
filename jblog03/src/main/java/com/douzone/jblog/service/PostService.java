@@ -18,12 +18,12 @@ public class PostService {
 		postRepository.insertWrite(postvo);
 	}
 
-	public PostVo getPost(Long postNo, Long categoryNo) {
-		return postRepository.getPost(postNo, categoryNo);
+	public PostVo getPost(Long postNo, Long categoryNo, String id) {
+		return postRepository.getPost(postNo, categoryNo, id);
 	}
 
-	public List<PostVo> getPostList(Long categoryNo) {
-		return postRepository.getPostList(categoryNo);
+	public List<PostVo> getPostList(Long categoryNo, String id) {
+		return postRepository.getPostList(categoryNo, id);
 	}
 	
 }

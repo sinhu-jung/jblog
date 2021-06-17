@@ -51,13 +51,13 @@ public class BlogController {
 		} else if (pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 		} else {
-			categoryNo = categoryService.findminCategory();
+			categoryNo = categoryService.findminCategory(id);
 		}
 		
 		BlogVo blogVo = blogService.findById(id);
-		PostVo postVo = postService.getPost(postNo, categoryNo);
+		PostVo postVo = postService.getPost(postNo, categoryNo, id);
 		List<CategoryVo> categoryList = categoryService.findById(id);
-		List<PostVo> postList = postService.getPostList(categoryNo);
+		List<PostVo> postList = postService.getPostList(categoryNo, id);
 		
 		model.addAttribute("blogVo", blogVo);
 		model.addAttribute("postVo", postVo);
