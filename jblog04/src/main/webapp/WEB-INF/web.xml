@@ -7,8 +7,12 @@
 	
 	<!-- Context Parameter -->
 	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
+		<param-value>com.douzone.jblog.config.AppConfig</param-value>
 	</context-param>
 	
 	<!-- Context Load Listener -->
@@ -35,9 +39,16 @@
 	<!-- DispatcherServlet -->
 	<servlet>
      	<servlet-name>spring</servlet-name>
-    	 <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>com.douzone.jblog.config.WebConfig</param-value>
+		</init-param>
 	</servlet>
-
 	<servlet-mapping>
     	 <servlet-name>spring</servlet-name>
      	<url-pattern>/</url-pattern>
