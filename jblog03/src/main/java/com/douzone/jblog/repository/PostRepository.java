@@ -1,5 +1,9 @@
 package com.douzone.jblog.repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,6 +22,17 @@ public class PostRepository {
 
 	public void deletePost(Long categoryNo) {
 		sqlSession.delete("post.delete", categoryNo);
+	}
+
+	public PostVo getPost(Long postNo, Long categoryNo) {
+		Map<String, Long> map = new HashMap<>();
+		map.put("postNo", postNo);
+		map.put("categoryNo", categoryNo);
+		return sqlSession.selectOne("post.getpost", map);
+	}
+
+	public List<PostVo> getPostList(Long categoryNo) {
+		return sqlSession.selectList("post.getPostList", categoryNo);
 	}
 
 }

@@ -16,4 +16,27 @@
 		where categori_no=#{categoryNo } 
 		]]>
 	</delete>
+	
+	<select id="getpost" parameterType="map" resultType="postvo">
+	<choose>
+		<when test="postNo == 0">
+			<![CDATA[
+			select title, contents 
+				from post 
+			where no=(select min(no) from post where categori_no = #{categoryNo })
+			]]>
+		</when>
+		<otherwise>
+			<![CDATA[
+			select title, contents from post where categori_no=#{categoryNo } and no=#{postNo }
+			]]>
+		</otherwise>
+	</choose>
+	</select>
+	
+	<select id="getPostList" parameterType="long" resultType="postvo">
+		<![CDATA[
+		select no, title, contents, reg_date as regDate, categori_no as categoriNo from post where categori_no=#{categoryNo }
+		]]>
+	</select>
 </mapper>

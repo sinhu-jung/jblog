@@ -55,10 +55,14 @@ public class BlogController {
 		}
 		
 		BlogVo blogVo = blogService.findById(id);
+		PostVo postVo = postService.getPost(postNo, categoryNo);
 		List<CategoryVo> categoryList = categoryService.findById(id);
+		List<PostVo> postList = postService.getPostList(categoryNo);
 		
 		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("postVo", postVo);
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("postList", postList);
 		return "blog/index";
 	}
 	
