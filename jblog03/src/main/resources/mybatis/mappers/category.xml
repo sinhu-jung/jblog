@@ -11,9 +11,33 @@
 		
 	<select id="findById" parameterType="String" resultType="categoryvo">
 		<![CDATA[
-		select no, name
-			from categori
-		where blog_id=#{id }
+		select c.no, c.name, c.description, c.reg_date, c.blog_id, p.categori_no, p.count
+			from categori c
+		left outer join 
+   			(select categori_no, count(*) as count from post  group by categori_no) p 
+		ON c.no = p.categori_no;
+		]]>
+	</select>
+	
+	<insert id="insertCategory" parameterType="categoryvo">
+		<![CDATA[
+		insert 
+			into categori
+		values(null, #{name }, #{description }, now(), #{blogID }) 
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="long" >
+		<![CDATA[
+		delete 
+			from categori 
+		where no=#{categoryNo } 
+		]]>
+	</delete>
+	
+	<select id="findminId" resultType="long">
+		<![CDATA[
+		select min(no) from categori
 		]]>
 	</select>
 </mapper>

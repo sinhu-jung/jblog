@@ -17,9 +17,9 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="">기본설정</a></li>
-					<li class="selected">카테고리</li>
-					<li><a href="">글작성</a></li>
+					<li><a href="${pageContext.request.contextPath }/${authUser.id }/admin/basic">기본설정</a></li>
+					<li class="selected"><a href="${pageContext.request.contextPath }/${authUser.id }/admin/category">카테고리</a></li>
+					<li><a href="${pageContext.request.contextPath }/${authUser.id }/admin/write">글작성</a></li>
 				</ul>
 				<table class="admin-cat">
 					<tr>
@@ -29,47 +29,36 @@
 						<th>설명</th>
 						<th>삭제</th>
 					</tr>
-					<tr>
-						<td>3</td>
-						<td>미분류</td>
-						<td>10</td>
-						<td>카테고리를 지정하지 않은 경우</td>
-						<td><img
-							src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>스프링 스터디</td>
-						<td>20</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img
-							src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>스프링 프로젝트</td>
-						<td>15</td>
-						<td>어쩌구 저쩌구</td>
-						<td><img
-							src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
-					</tr>
+					<c:set var="count" value="${fn:length(categoryList ) }"/>
+					<c:forEach var="vo" items="${categoryList }" varStatus="status">
+						<tr>
+							<td>${count-status.index }</td>
+							<td>${vo.name }</td>
+							<td>${vo.count }</td>
+							<td>${vo.description }</td>
+							<td><a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/del?categoriNo=${vo.no}">
+								<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
+						</tr>
+					</c:forEach>
 				</table>
 
 				<h4 class="n-c">새로운 카테고리 추가</h4>
-				<table id="admin-cat-add">
-					<tr>
-						<td class="t">카테고리명</td>
-						<td><input type="text" name="name"></td>
-					</tr>
-					<tr>
-						<td class="t">설명</td>
-						<td><input type="text" name="desc"></td>
-					</tr>
-					<tr>
-						<td class="s">&nbsp;</td>
-						<td><input type="submit" value="카테고리 추가"></td>
-					</tr>
-				</table>
+				<form method="post" action="${pageContext.request.contextPath }/${authUser.id }/admin/category" >
+					<table id="admin-cat-add">
+						<tr>
+							<td class="t">카테고리명</td>
+							<td><input type="text" name="name"></td>
+						</tr>
+						<tr>
+							<td class="t">설명</td>
+							<td><input type="text" name="description"></td>
+						</tr>
+						<tr>
+							<td class="s">&nbsp;</td>
+							<td><input type="submit" value="카테고리 추가"></td>
+						</tr>
+					</table>
+				</form>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/blog-footer.jsp"></c:import>

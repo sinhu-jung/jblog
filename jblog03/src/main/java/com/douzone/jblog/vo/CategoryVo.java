@@ -2,8 +2,9 @@ package com.douzone.jblog.vo;
 
 public class CategoryVo {
 	private Long no;
+	private Long count;
 	private String name;
-	private String desc;
+	private String description;
 	private String regDate;
 	private String blogID;
 	public Long getNo() {
@@ -18,11 +19,17 @@ public class CategoryVo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDesc() {
-		return desc;
+	public Long getCount() {
+		return count;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setCount(Long count) {
+		this.count = count;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getRegDate() {
 		return regDate;
@@ -38,8 +45,8 @@ public class CategoryVo {
 	}
 	@Override
 	public String toString() {
-		return "CategoriVo [no=" + no + ", name=" + name + ", desc=" + desc + ", regDate=" + regDate + ", blogID="
-				+ blogID + "]";
+		return "CategoryVo [no=" + no + ", count=" + count + ", name=" + name + ", description=" + description
+				+ ", regDate=" + regDate + ", blogID=" + blogID + "]";
 	}
 	
 	

@@ -31,4 +31,16 @@ public class CategoryRepository {
 		return sqlSession.selectList("category.findById", id);
 	}
 
+	public void insertCategory(CategoryVo categoryVo) {
+		sqlSession.insert("category.insertCategory", categoryVo);
+	}
+
+	public void deleteCategory(Long categoryNo) {
+		sqlSession.delete("category.delete", categoryNo);
+	}
+
+	public Long findminCategory() {
+		return sqlSession.selectOne("category.findminId");
+	}
+
 }
