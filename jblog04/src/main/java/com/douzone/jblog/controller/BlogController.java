@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.douzone.jblog.security.Auth;
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
@@ -66,6 +67,7 @@ public class BlogController {
 		return "blog/index";
 	}
 	
+	@Auth
 	@RequestMapping("/admin/basic")
 	public String adminBasic(
 			@PathVariable("id") String id, Model model) {
@@ -86,6 +88,7 @@ public class BlogController {
 		return "redirect:/{id}/admin/basic";
 	}
 	
+	@Auth
 	@RequestMapping("/admin/category")
 	public String adminCategory(
 			@PathVariable("id") String id, Model model) {
@@ -113,6 +116,7 @@ public class BlogController {
 		return "redirect:/{id}/admin/category";
 	}
 	
+	@Auth
 	@RequestMapping("/admin/write")
 	public String adminWrite(
 			@PathVariable("id") String id, Model model) {

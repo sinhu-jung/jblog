@@ -49,15 +49,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		
-		// 7. 권한 체크를 위해서 @Auth의 role 가져오기("ADMIN", "USER")
-		String role = auth.role();
-		String authRole = authUser.getRole();
-		
-		if("USER".equals(role)) {
-			return true;
-		}
-		
-		if("ADMIN".equals(authRole) == false) { 
+		// 7. admin check
+		String[] divid = request.getRequestURI().toString().split("/");
+		String id = divid[2];
+				
+		if(id.equals(authUser.getId()) == false) {
 			response.sendRedirect(request.getContextPath());
 			return false;
 		}
