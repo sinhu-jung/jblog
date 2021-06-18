@@ -11,7 +11,7 @@
 		
 	<select id="findById" parameterType="String" resultType="categoryvo">
 		<![CDATA[
-		select c.no, c.name, c.description, c.reg_date, c.blog_id, p.categori_no, if(isnull(p.count), 0, p.count)
+		select c.no, c.name, c.description, c.reg_date, c.blog_id, p.categori_no, if(isnull(p.count), 0, p.count) as count
 			from categori c
 		left outer join 
    			(select categori_no, count(*) as count from post  group by categori_no) p 
