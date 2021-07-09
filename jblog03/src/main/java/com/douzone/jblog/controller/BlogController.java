@@ -22,7 +22,7 @@ import com.douzone.jblog.vo.CategoryVo;
 import com.douzone.jblog.vo.PostVo;
 
 @Controller
-@RequestMapping("/{id:(?!assets).*}")
+@RequestMapping("/{id:(?!assets|ejs).*}")
 public class BlogController {
 	
 	@Autowired
@@ -93,27 +93,8 @@ public class BlogController {
 	public String adminCategory(
 			@PathVariable("id") String id, Model model) {
 		BlogVo blogVo = blogService.findById(id);
-		List<CategoryVo> categoryList = categoryService.findById(id);
-		
 		model.addAttribute("blogVo", blogVo);
-		model.addAttribute("categoryList", categoryList);
 		return "blog/admin/category";
-	}
-	
-	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
-	public String addCategory(
-			@PathVariable("id") String id,
-			CategoryVo categoryVo ) {
-		categoryVo.setBlogID(id);
-		categoryService.addcategory(categoryVo);
-		return "redirect:/{id}/admin/category";
-	}
-	
-	@RequestMapping(value="/admin/category/del", method=RequestMethod.GET)
-	public String deleteCategory(
-			@RequestParam(value="categoriNo", required=true, defaultValue="") Long categoryNo ) {
-		categoryService.delCategory(categoryNo);
-		return "redirect:/{id}/admin/category";
 	}
 	
 	@Auth

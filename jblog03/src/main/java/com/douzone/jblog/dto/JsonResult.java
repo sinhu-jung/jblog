@@ -36,3 +36,4 @@ public class JsonResult {
 		return message;
 	}
 }
+

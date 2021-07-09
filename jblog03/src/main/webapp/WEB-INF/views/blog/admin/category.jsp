@@ -8,9 +8,90 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
-<Link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/jblog.css">
 </head>
+<Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/ejs/ejs.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+var listEJS = new EJS({
+	url: "${pageContext.request.contextPath }/ejs/list-template.ejs"
+});
+
+var listItemEJS = new EJS({
+ 	url: "${pageContext.request.contextPath }/ejs/listItem-template.ejs"
+ });
+
+var fetch = function() {
+	$.ajax({
+		url: "${pageContext.request.contextPath }/category/list/" + ${blogVo.id},
+		dataType: "json", // 받을 때 포멧 
+		type: "get",	  // 요청 method
+		success: function(response){
+			var html = listEJS.render(response);
+			$("#list").after(html);
+		}
+	});
+}
+
+var valid = function(titles, message, callback) { 
+	 $("#dialog-message p").text(message);
+	 $("#dialog-message").attr("title", titles).dialog({
+			modal: true,
+			buttons: {
+				"확인": function(){
+					$("#dialog-message").dialog("close");
+				}
+			},
+			close: callback
+		});
+}	
+
+var addlist = function() {
+	 $("#add-from").submit(function(event){
+			event.preventDefault();
+			
+			vo = {}
+			
+			vo.name = $("#name").val();
+			// validation name
+			if(vo.name == "") {
+				valid("경고", "카테고리명이 비었습니다.", function(){
+					$("#name").focus();
+				});
+				return;
+			}
+			vo.description = $("#description").val();
+			// validation password
+			if(vo.description == "") {
+				valid("경고", "설명이 비었습니다.", function(){
+					$("#description").focus();
+				});
+				return;
+			}
+			
+			// 데이터 등록
+		$.ajax({
+			url: "${pageContext.request.contextPath }/category/addlist/" + ${blogVo.id},
+			dataType: "json",
+			type: "post",
+			contentType: "application/json",   
+			data: JSON.stringify(vo),
+			success: function(response){
+				var html = listEJS.render(response);
+				$("#list").after(html);
+			}
+		});		
+		
+	});
+}
+
+$(function() {
+	addlist();
+	fetch();
+});
+</script>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/blog-header.jsp"></c:import>
@@ -22,36 +103,25 @@
 					<li><a href="${pageContext.request.contextPath }/${authUser.id }/admin/write">글작성</a></li>
 				</ul>
 				<table class="admin-cat">
-					<tr>
+					<tr id="list">
 						<th>번호</th>
 						<th>카테고리명</th>
 						<th>포스트 수</th>
 						<th>설명</th>
 						<th>삭제</th>
 					</tr>
-					<c:set var="count" value="${fn:length(categoryList ) }"/>
-					<c:forEach var="vo" items="${categoryList }" varStatus="status">
-						<tr>
-							<td>${count-status.index }</td>
-							<td>${vo.name }</td>
-							<td>${vo.count }</td>
-							<td>${vo.description }</td>
-							<td><a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/del?categoriNo=${vo.no}">
-								<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
-						</tr>
-					</c:forEach>
 				</table>
 
 				<h4 class="n-c">새로운 카테고리 추가</h4>
-				<form method="post" action="${pageContext.request.contextPath }/${authUser.id }/admin/category" >
+				<form id="add-from" method="post" action="" >
 					<table id="admin-cat-add">
 						<tr>
 							<td class="t">카테고리명</td>
-							<td><input type="text" name="name"></td>
+							<td><input type="text" id="name" name="name"></td>
 						</tr>
 						<tr>
 							<td class="t">설명</td>
-							<td><input type="text" name="description"></td>
+							<td><input type="text" id="description" name="description"></td>
 						</tr>
 						<tr>
 							<td class="s">&nbsp;</td>
@@ -60,6 +130,9 @@
 					</table>
 				</form>
 			</div>
+		</div>
+		<div id="dialog-message" title="" style="display: none">
+			<p></p>
 		</div>
 		<c:import url="/WEB-INF/views/includes/blog-footer.jsp"></c:import>
 	</div>

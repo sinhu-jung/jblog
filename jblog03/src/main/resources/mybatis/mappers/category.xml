@@ -15,7 +15,7 @@
 			from categori c
 		left outer join 
    			(select categori_no, count(*) as count from post  group by categori_no) p 
-		ON c.no = p.categori_no where c.blog_id=#{id };
+		ON c.no = p.categori_no where c.blog_id=#{id }
 		]]>
 	</select>
 	
