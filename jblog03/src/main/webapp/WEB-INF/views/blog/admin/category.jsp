@@ -25,7 +25,7 @@ var listItemEJS = new EJS({
 
 var fetch = function() {
 	$.ajax({
-		url: "${pageContext.request.contextPath }/category/list/" + ${blogVo.id},
+		url: "${pageContext.request.contextPath }/category/list/" + "${blogVo.id}",
 		dataType: "json", // 받을 때 포멧 
 		type: "get",	  // 요청 method
 		success: function(response){
@@ -49,7 +49,7 @@ var valid = function(titles, message, callback) {
 }	
 
 var addlist = function() {
-	 $("#add-from").submit(function(event){
+	 $("#add-form").submit(function(event){
 			event.preventDefault();
 			
 			vo = {}
@@ -73,14 +73,25 @@ var addlist = function() {
 			
 			// 데이터 등록
 		$.ajax({
-			url: "${pageContext.request.contextPath }/category/addlist/" + ${blogVo.id},
+			url: "${pageContext.request.contextPath }/category/addlist/" + "${blogVo.id}",
 			dataType: "json",
 			type: "post",
 			contentType: "application/json",   
 			data: JSON.stringify(vo),
 			success: function(response){
-				var html = listEJS.render(response);
-				$("#list").after(html);
+				let index = $(".admin-cat tr").length
+				
+				if(response.result != "success"){
+					console.error(response.message);
+					return;
+				}	
+				
+				response.data.index = index;
+				var html = listItemEJS.render(response.data);
+				$(".admin-cat tr:last").after(html);
+				
+				// form reset
+				$("#add-form")[0].reset();
 			}
 		});		
 		
@@ -113,7 +124,7 @@ $(function() {
 				</table>
 
 				<h4 class="n-c">새로운 카테고리 추가</h4>
-				<form id="add-from" method="post" action="" >
+				<form action="" method="post" id="add-form" >
 					<table id="admin-cat-add">
 						<tr>
 							<td class="t">카테고리명</td>
