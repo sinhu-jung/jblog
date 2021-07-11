@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douzone.jblog.dto.JsonResult;
@@ -37,11 +38,13 @@ public class AdminCategoryController {
 		categoryService.addcategory(categoryVo);
 		return JsonResult.success(categoryVo);
 	}
-//	
-//	@RequestMapping(value="/admin/category/del", method=RequestMethod.GET)
-//	public String deleteCategory(
-//			@RequestParam(value="categoriNo", required=true, defaultValue="") Long categoryNo ) {
-//		categoryService.delCategory(categoryNo);
-//		return "redirect:/{id}/admin/category";
-//	}
+	
+	@ResponseBody
+	@RequestMapping("/delete")
+	public JsonResult deleteCategory(
+			@RequestParam(value="no", required=true, defaultValue="") Long categoryNo ) {
+		System.out.println(categoryNo);
+		categoryService.delCategory(categoryNo);
+		return JsonResult.success(categoryNo);
+	}
 }

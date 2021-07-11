@@ -98,8 +98,48 @@ var addlist = function() {
 	});
 }
 
+var del = function(){
+	$(document).on("click", ".admin-cat td a", function(event) {
+		event.preventDefault();
+		let no = $(this).data("no");
+		$("#hidden-no").val(no);
+		deleteDialog.dialog("open");
+	});
+
+	const deleteDialog = $("#dialog-delete-form").dialog({
+		autoOpen: false,
+		width: 300,
+		height: 220,
+		modal: true,
+		buttons: {
+			"삭제": function(){
+				const no = $("#hidden-no").val();
+				const password = $("#password-delete").val();
+				$.ajax({
+					url: "${pageContext.request.contextPath }/category/delete",
+					dataType: "json", // 받을 때 포멧 
+					type: "post",	  // 요청 method
+					data: "no=" + no,
+					success: function(response){
+						$("#admin-cat tr[data-no="+ response.data + "]").remove();
+						deleteDialog.dialog("close");
+					}
+				});
+			},
+			"취소": function(){
+				$(this).dialog("close");
+			}
+		},
+		close: function() {
+			// no 비우기
+			$("#hidden-no").val("");
+		}
+	});
+}
+	
 $(function() {
 	addlist();
+	del();
 	fetch();
 });
 </script>
@@ -141,6 +181,12 @@ $(function() {
 					</table>
 				</form>
 			</div>
+		</div>
+		<div id="dialog-delete-form" title="카테고리 삭제" style="display: none">
+			<p class="validateTips normal">카테고리를 삭제하시겠습니까?</p>
+			<form>
+				<input type="hidden" id="hidden-no" value=""> 
+			</form>
 		</div>
 		<div id="dialog-message" title="" style="display: none">
 			<p></p>
