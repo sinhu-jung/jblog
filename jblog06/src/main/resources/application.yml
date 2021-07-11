@@ -50,7 +50,7 @@ spring:
 
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mysql://192.168.132.9:3307/jblog?characterEncoding=utf8
+      url: jdbc:mysql://192.168.80.103:3307/jblog?characterEncoding=utf8
       username: jblog
       password: jblog
       initialSize: 10

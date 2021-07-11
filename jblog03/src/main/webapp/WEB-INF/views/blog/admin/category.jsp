@@ -121,7 +121,7 @@ var del = function(){
 					type: "post",	  // 요청 method
 					data: "no=" + no,
 					success: function(response){
-						$("#admin-cat tr[data-no="+ response.data + "]").remove();
+						$(".admin-cat tr[data-no="+ response.data + "]").remove();
 						deleteDialog.dialog("close");
 					}
 				});
